@@ -1,0 +1,52 @@
+#app {
+	text-align: center;
+	// background-color: #c3c3c3;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	
+	header {
+		min-height: 10vh;
+		padding: 2vmin 0;
+
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		
+		font-size: calc(10px + 2vmin);
+		color: rgba(0, 0, 0, .7);
+
+		p {
+			margin: 0;
+		}
+		p.code {
+			font-size: calc(2px + 2vmin);
+			font-family: "Courier New";
+
+			color: greenyellow;
+			background-color: rgba(0, 0, 0, .7);
+
+			padding: 5px;
+			border-radius: 4px;
+
+			position: relative;
+			top: 3px;
+		}
+	}
+
+	// #feed-display {
+
+	// }
+}
+
+// TODO: add spinner animation
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  } to {
+    transform: rotate(360deg);
+  }
+}
