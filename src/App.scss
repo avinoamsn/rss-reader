@@ -1,3 +1,8 @@
+$randomHexColor: random(255);
+$consoleColor: rgba(0, 0, 0, .7);
+$radius: 4px;
+
+
 #app {
 	text-align: center;
 	// background-color: #c3c3c3;
@@ -17,29 +22,78 @@
 		justify-content: center;
 		
 		font-size: calc(10px + 2vmin);
-		color: rgba(0, 0, 0, .7);
+		color: $consoleColor;
 
 		p {
 			margin: 0;
 		}
-		p.code {
+
+		input {
 			font-size: calc(2px + 2vmin);
-			font-family: "Courier New";
+
+			border-radius: $radius;
+			border: none;
+
+			margin: 2px;
+		}
+		input:focus {
+			outline: none;
+		}
+
+		.code {
+			font-family: "Courier New", monospace;
+			font-size: calc(2px + 2vmin);
 
 			color: greenyellow;
-			background-color: rgba(0, 0, 0, .7);
+			background-color: $consoleColor;
 
 			padding: 5px;
-			border-radius: 4px;
+			border-radius: $radius;
 
-			position: relative;
-			top: 3px;
+			// position: relative;
+			// top: 3px;
+		}
+	}
+
+	ul {
+		list-style: none;
+		padding: 0;
+	}
+
+	#feed {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		
+		.card {
+			flex-basis: 30%;
+
+			background-color: orange;
+
+			// background-color: rgba($randomHexColor, $randomHexColor, $randomHexColor, .5);
+
+			padding: 10px;
+			margin: 2px;
+
+			border-radius: $radius;
+
+			p {
+				margin: 0;
+				height: 38px; // two lines
+
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
 		}
 	}
 
 	// #feed-display {
 
 	// }
+}
+
+.show {
+	font-size: 50px;
 }
 
 // TODO: add spinner animation

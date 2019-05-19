@@ -39,8 +39,8 @@ class Form extends Component<FormProps, FormInterface> {
 				<p>syndicator</p>
 
 				<form onSubmit={this.handleSubmit}>
-					<input type="text" value={this.state.url} onChange={this.handleChange} />
-					<input type="submit" value="fetch my feed!" />
+					<input className="code" type="text" value={this.state.url} onChange={this.handleChange} />
+					<input className="code" type="submit" value="fetch my feed!" />
 				</form>
 			</header>
 		)

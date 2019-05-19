@@ -11,52 +11,20 @@ interface ReaderState {
 }
 
 class Reader extends Component<ReaderProps, ReaderState> {
-	timer!: NodeJS.Timeout;
-
-	constructor(props: ReaderProps) {
-		super(props)
-		this.state = {
-			renderedItems: [],
-			numItemsRendered: 0,
-		}
-	}
-
-	componentDidUpdate() {
-		// check that feed is populated
-		if(this.props.feed.length !== 0)
-			this.scheduleNextUpdate();
-	}
-
-	componentWillUnmount() {
-    clearTimeout(this.timer)
-  }
-
-	// sets timer for each item added to renderedItems
-	scheduleNextUpdate = () => {
-		this.timer = setTimeout(this.updateRenderedItems, 1000);
-	}
-
-	/**
-	 * TODO
-	 */
-	updateRenderedItems = () => {
-		this.setState({
-      renderedItems: this.state.renderedItems.concat(this.props.feed[this.state.numItemsRendered]),
-      numItemsRendered: this.state.numItemsRendered + 1,
-		});
-
-  	if(this.state.numItemsRendered < this.props.feed.length) {
-      this.scheduleNextUpdate();
-		}
-	}
+	tileClasses: any = [];
 
 	render() {
+
 		return (
-			<div id="feed">
-				{this.state.renderedItems.map((item: any) =>
-					<p key={item.guid}>{item.title}</p>
+			<ul id="feed">
+				{this.props.feed.map((item: any, i) =>
+					<a className="card code" href={item.guid}>
+						<li key={i}>
+							<p>{item.title}</p>
+						</li>
+					</a>
 				)}
-			</div>
+			</ul>
 		)
 	}
 }
