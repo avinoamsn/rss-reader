@@ -20,7 +20,9 @@ const feed = (state = defaultState, action: any) => {
 			});
 		case ACTIONS.Types.ERROR:
 			return Object.assign({}, state, {
+				isFetching: false,
 				error: true,
+				feed: action.payload,
 			});
 		default:
 			return state;

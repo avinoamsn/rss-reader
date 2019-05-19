@@ -2,9 +2,9 @@ import Parser from 'rss-parser';
 
 // action type(s)
 const Types = {
-	REQUEST_FEED: "REQUEST_FEED",
-	RECIEVE_FEED: "RECIEVE_FEED",
-	ERROR: "ERROR",
+	REQUEST_FEED: 'REQUEST_FEED',
+	RECIEVE_FEED: 'RECIEVE_FEED',
+	ERROR: 'ERROR',
 };
 
 // action(s)
@@ -16,6 +16,11 @@ const requestFeed = (url: any) => ({
 const recieveFeed = (feed: any) => ({
 	type: Types.RECIEVE_FEED,
 	payload: feed.items,
+});
+
+const catchError = (error: any) => ({
+	type: Types.ERROR,
+	payload: error.message || 'Something went wrong.',
 });
 
 /**
@@ -35,7 +40,13 @@ const fetchFeed = (url: any) => {
 	return async(dispatch: any) => {
 		dispatch(requestFeed(url))
 		// parser returns feed as a JSON object
-		dispatch(recieveFeed(await parser.parseURL(PROXY_URL + url)));
+		parser.parseURL(PROXY_URL + url, (err, feed) => {
+			if(err)
+				dispatch(catchError(err));
+			else
+				dispatch(recieveFeed(feed));
+		});
+		;
 	}
 };
 
