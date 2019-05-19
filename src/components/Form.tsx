@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from "react-redux";
-import { ACTIONS } from "../modules";
+import { ACTIONS } from "../redux";
 
 interface FormProps {
 	fetchFeed(url: string): void,
@@ -22,11 +22,11 @@ class Form extends Component<FormProps, FormInterface> {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange = (event: any) => {
+  handleChange = (event: any): void => {
 		this.setState({url: event.target.value});
 	}
 	
-  handleSubmit = (event: any) => {
+  handleSubmit = (event: any): void => {
 		event.preventDefault();
 		this.props.fetchFeed(this.state.url);
 	}
@@ -34,13 +34,11 @@ class Form extends Component<FormProps, FormInterface> {
 	render() {
 		return (
 			<header>
-				<p>avi's really simple</p>
-				<p className="code">Really Simple Syndication</p>
-				<p>syndicator</p>
+				<h1><span>a</span>reses</h1>
 
 				<form onSubmit={this.handleSubmit}>
-					<input className="code" type="text" value={this.state.url} onChange={this.handleChange} />
-					<input className="code" type="submit" value="fetch my feed!" />
+					<input type="text" value={this.state.url} onChange={this.handleChange} />
+					<input type="submit" value="fetch feed" />
 				</form>
 			</header>
 		)

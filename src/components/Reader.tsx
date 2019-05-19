@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 interface ReaderProps {
 	feed: [],
+	isFetching: boolean,
 }
 
 interface ReaderState {
@@ -11,21 +13,23 @@ interface ReaderState {
 }
 
 class Reader extends Component<ReaderProps, ReaderState> {
-	tileClasses: any = [];
-
 	render() {
-
-		return (
-			<ul id="feed">
-				{this.props.feed.map((item: any, i) =>
-					<a className="card code" href={item.guid}>
+		if(!this.props.isFetching)
+			return (
+				<ul id="feed">
+					{this.props.feed.map((item: any, i) =>
 						<li key={i}>
-							<p>{item.title}</p>
+							<a href={item.guid}>
+								<h2>{item.title}</h2>
+								<h5>{moment(item.isoDate).fromNow()}</h5>
+								<p>{item.contentSnippet}</p>
+							</a>
 						</li>
-					</a>
-				)}
-			</ul>
-		)
+					)}
+				</ul>
+			)
+		else
+			return null;
 	}
 }
 
