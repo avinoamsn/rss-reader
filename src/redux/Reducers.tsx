@@ -15,11 +15,11 @@ const feed = (state = defaultState, action: any) => {
 			return Object.assign({}, state, {
 				isFetching: true,
 				error: false,
+				errorMessage: '',
 			});
 		case ACTIONS.Types.RECIEVE_FEED:
 			return Object.assign({}, state, {
 				isFetching: false,
-				error: false,
 				feed: action.payload,
 				renderedItems: [],
 				numRenderedItems: 0,
