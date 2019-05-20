@@ -30,7 +30,7 @@ class Error extends Component<ErrorProps, ErrorState> {
 				<div className="error">
 					<h3>ERROR:</h3> 
 					<p>{this.props.errorMessage}</p>
-					<p>Please try a different URL.</p>
+					<p>This may not be a valid RSS feed. Please try a different URL.</p>
 					<button onClick={handleHide}>dismiss</button>
 				</div>
 			);
