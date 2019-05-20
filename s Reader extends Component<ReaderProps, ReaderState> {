@@ -1,790 +1,0 @@
-[1mdiff --git a/package-lock.json b/package-lock.json[m
-[1mindex 5b3593d..a59a0a8 100644[m
-[1m--- a/package-lock.json[m
-[1m+++ b/package-lock.json[m
-[36m@@ -8489,6 +8489,11 @@[m
-         }[m
-       }[m
-     },[m
-[32m+[m[32m    "moment": {[m
-[32m+[m[32m      "version": "2.24.0",[m
-[32m+[m[32m      "resolved": "https://registry.npmjs.org/moment/-/moment-2.24.0.tgz",[m
-[32m+[m[32m      "integrity": "sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg=="[m
-[32m+[m[32m    },[m
-     "move-concurrently": {[m
-       "version": "1.0.1",[m
-       "resolved": "https://registry.npmjs.org/move-concurrently/-/move-concurrently-1.0.1.tgz",[m
-[36m@@ -10770,6 +10775,11 @@[m
-         "deep-diff": "^0.3.5"[m
-       }[m
-     },[m
-[32m+[m[32m    "redux-persist": {[m
-[32m+[m[32m      "version": "5.10.0",[m
-[32m+[m[32m      "resolved": "https://registry.npmjs.org/redux-persist/-/redux-persist-5.10.0.tgz",[m
-[32m+[m[32m      "integrity": "sha512-sSJAzNq7zka3qVHKce1hbvqf0Vf5DuTVm7dr4GtsqQVOexnrvbV47RWFiPxQ8fscnyiuWyD2O92DOxPl0tGCRg=="[m
-[32m+[m[32m    },[m
-     "redux-thunk": {[m
-       "version": "2.3.0",[m
-       "resolved": "https://registry.npmjs.org/redux-thunk/-/redux-thunk-2.3.0.tgz",[m
-[1mdiff --git a/package.json b/package.json[m
-[1mindex e1b4491..e37a953 100644[m
-[1m--- a/package.json[m
-[1m+++ b/package.json[m
-[36m@@ -9,6 +9,7 @@[m
-     "@types/react-dom": "^16.8.4",[m
-     "@types/react-redux": "^7.0.9",[m
-     "@types/redux-logger": "^3.0.7",[m
-[32m+[m[32m    "moment": "^2.24.0",[m
-     "node-sass": "^4.12.0",[m
-     "react": "^16.8.6",[m
-     "react-dom": "^16.8.6",[m
-[36m@@ -16,6 +17,7 @@[m
-     "react-scripts": "3.0.1",[m
-     "redux": "^4.0.1",[m
-     "redux-logger": "^3.0.6",[m
-[32m+[m[32m    "redux-persist": "^5.10.0",[m
-     "redux-thunk": "^2.3.0",[m
-     "rss-parser": "^3.7.0",[m
-     "typescript": "^3.4.5"[m
-[1mdiff --git a/src/App.scss b/src/App.scss[m
-[1mindex c0105d1..fe27d71 100644[m
-[1m--- a/src/App.scss[m
-[1m+++ b/src/App.scss[m
-[36m@@ -1,12 +1,18 @@[m
-[32m+[m[32m$randomHexColor: random(255);[m[41m[m
-[32m+[m[32m$consoleColor: rgba(0, 0, 0, .7);[m[41m[m
-[32m+[m[32m$radius: 4px;[m[41m[m
-[32m+[m[41m[m
- #app {[m
- 	text-align: center;[m
-[31m-	// background-color: #c3c3c3;[m
- [m
- 	display: flex;[m
- 	flex-direction: column;[m
- 	align-items: center;[m
- 	justify-content: center;[m
-[31m-	[m
-[32m+[m[41m[m
-[32m+[m	[32m/*------------------------------------*\[m[41m[m
-[32m+[m		[32mFORM[m[41m[m
-[32m+[m	[32m\*------------------------------------*/[m[41m[m
- 	header {[m
- 		min-height: 10vh;[m
- 		padding: 2vmin 0;[m
-[36m@@ -16,33 +22,263 @@[m
- 		align-items: center;[m
- 		justify-content: center;[m
- 		[m
-[31m-		font-size: calc(10px + 2vmin);[m
-[31m-		color: rgba(0, 0, 0, .7);[m
-[32m+[m		[32mfont-size: 26px;[m[41m[m
-[32m+[m		[32mcolor: black;[m[41m[m
-[32m+[m[41m[m
-[32m+[m		[32manimation: title;[m[41m[m
-[32m+[m		[32manimation-duration: .5s;[m[41m[m
-[32m+[m[41m[m
-[32m+[m		[32mh1 {[m[41m[m
-[32m+[m			[32mmargin: 0;[m[41m[m
-[32m+[m			[32mletter-spacing: -6px;[m[41m[m
-[32m+[m			[32mmargin-bottom: 2vmin;[m[41m[m
-[32m+[m[41m[m
-[32m+[m			[32mspan { // the letter "a"[m[41m[m
-[32m+[m				[32mletter-spacing: -13px;[m[41m[m
-[32m+[m			[32m}[m[41m[m
-[32m+[m		[32m}[m[41m[m
-[32m+[m[41m[m
-[32m+[m		[32minput {[m[41m[m
-[32m+[m			[32mfont-size: calc(2px + 2vmin);[m[41m[m
-[32m+[m			[32mfont-weight: 900;[m[41m[m
-[32m+[m			[32mletter-spacing: 1px;[m[41m[m
-[32m+[m			[32mcolor: white;[m[41m[m
-[32m+[m			[32mbackground-color: black;[m[41m[m
-[32m+[m[41m[m
-[32m+[m			[32mborder-radius: $radius;[m[41m[m
-[32m+[m			[32mborder: none;[m[41m[m
-[32m+[m[41m[m
-[32m+[m			[32mmargin: 2px;[m[41m[m
-[32m+[m			[32mpadding: 5px;[m[41m[m
-[32m+[m[41m[m
-[32m+[m			[32manimation: input;[m[41m[m
-[32m+[m			[32manimation-duration: .5s;[m[41m[m
-[32m+[m[41m[m
-[32m+[m		[32m}[m[41m[m
-[32m+[m		[32minput[type="submit"] {[m[41m[m
-[32m+[m			[32mcursor: pointer;[m[41m[m
-[32m+[m		[32m}[m[41m[m
-[32m+[m	[32m}[m[41m[m
-[32m+[m[41m[m
-[32m+[m	[32m/*------------------------------------*\[m[41m[m
-[32m+[m		[32mSPINNER[m[41m[m
-[32m+[m	[32m\*------------------------------------*/[m[41m[m
-[32m+[m	[32m#spinner {[m[41m[m
-[32m+[m		[32mmargin-top: 30vh;[m[41m[m
-[32m+[m[41m[m
-[32m+[m		[32m// removes the gap b/w divs caused by the line break[m[41m[m
-[32m+[m		[32mbr {[m[41m[m
-[32m+[m			[32mdisplay: block;[m[41m[m
-[32m+[m			[32mmargin: -2px;[m[41m[m
-[32m+[m		[32m}[m[41m[m
-[32m+[m[41m[m
-[32m+[m		[32m.spinner-component {[m[41m[m
-[32m+[m			[32mdisplay: inline-block;[m[41m[m
-[32m+[m[41m[m
-[32m+[m			[32mheight: 50px;[m[41m[m
-[32m+[m			[32mwidth: 50px;[m[41m[m
-[32m+[m			[32mbackground-color: black;[m[41m[m
-[32m+[m			[32mborder-radius: 50%;[m[41m[m
-[32m+[m[41m[m
-[32m+[m			[32mmargin: -15px;[m[41m[m
-[32m+[m[41m[m
-[32m+[m			[32manimation-duration: 1s;[m[41m[m
-[32m+[m			[32manimation-iteration-count: infinite;[m[41m[m
-[32m+[m			[32manimation-timing-function: cubic-bezier(0, 0, 0, 0);[m[41m[m
-[32m+[m		[32m}[m[41m[m
-[32m+[m[41m[m
-[32m+[m		[32m#spin-1 {[m[41m[m
-[32m+[m			[32manimation-name: spinner-component-1;[m[41m[m
-[32m+[m			[32mtransform-origin: 100% 100%;[m[41m[m
-[32m+[m		[32m}[m[41m[m
-[32m+[m		[32m#spin-2 {[m[41m[m
-[32m+[m			[32manimation-name: spinner-component-2;[m[41m[m
-[32m+[m			[32mtransform-origin: 0% 100%;[m[41m[m
-[32m+[m		[32m}[m[41m[m
-[32m+[m		[32m#spin-3 {[m[41m[m
-[32m+[m			[32manimation-name: spinner-component-2;[m[41m[m
-[32m+[m			[32mtransform-origin: 100% 0%;[m[41m[m
-[32m+[m		[32m}[m[41m[m
-[32m+[m		[32m#spin-4 {[m[41m[m
-[32m+[m			[32manimation-name: spinner-component-1;[m[41m[m
-[32m+[m			[32mtransform-origin: 0% 0%;[m[41m[m
-[32m+[m		[32m}[m[41m[m
-[32m+[m	[32m}[m[41m[m
-[32m+[m[41m[m
-[32m+[m	[32m// a randomly generated delay sequence that I liked,[m[41m[m
-[32m+[m	[32m// may hardcode this one in at some point (ordered sequentially)[m[41m[m
-[32m+[m	[32m// animation-delay: 0.139336s;[m[41m[m
-[32m+[m	[32m// animation-delay: 0.0669135s;[m[41m[m
-[32m+[m	[32m// animation-delay: 0.140319s;[m[41m[m
-[32m+[m	[32m// animation-delay: 0.0369241s;[m[41m[m
-[32m+[m[41m[m
-[32m+[m	[32m/*------------------------------------*\[m[41m[m
-[32m+[m		[32mREADER[m[41m[m
-[32m+[m	[32m\*------------------------------------*/[m[41m[m
-[32m+[m	[32mul#feed {[m[41m[m
-[32m+[m		[32mmax-width: 90vw;[m[41m[m
-[32m+[m		[32mpadding: 0;[m[41m[m
-[32m+[m[41m[m
-[32m+[m		[32mlist-style: none;[m[41m[m
-[32m+[m[41m[m
-[32m+[m		[32mdisplay: flex;[m[41m[m
-[32m+[m		[32mflex-wrap: wrap;[m[41m[m
-[32m+[m		[32mjustify-content: center;[m[41m[m
-[32m+[m[41m		[m
-[32m+[m		[32mli {[m[41m[m
-[32m+[m			[32mflex-basis: 30%;[m[41m[m
-[32m+[m			[32mmax-width: 30%;[m[41m[m
-[32m+[m			[32mwidth: 100%;[m[41m[m
-[32m+[m[41m[m
-[32m+[m			[32mmargin: 2px;[m[41m[m
-[32m+[m			[32mborder-radius: $radius;[m[41m[m
-[32m+[m[41m[m
-[32m+[m			[32mtext-align: left;[m[41m[m
-[32m+[m			[32mbackground-color: black;[m[41m[m
-[32m+[m[41m[m
-[32m+[m			[32manimation-name: feed;[m[41m[m
-[32m+[m			[32manimation-duration: .25s;[m[41m[m
- [m
-[31m-		p {[m
-[32m+[m			[32ma {[m[41m[m
-[32m+[m				[32mdisplay: block;[m[41m[m
-[32m+[m				[32mbox-sizing: border-box;[m[41m[m
-[32m+[m				[32mpadding: 10px;[m[41m[m
-[32m+[m[41m[m
-[32m+[m				[32mwidth: 100%;[m[41m[m
-[32m+[m				[32mheight: 100%;[m[41m[m
-[32m+[m[41m[m
-[32m+[m				[32mcolor: white;[m[41m[m
-[32m+[m				[32mtext-decoration: none;[m[41m[m
-[32m+[m[41m[m
-[32m+[m				[32manimation-name: feed;[m[41m[m
-[32m+[m				[32manimation-duration: 1s;[m[41m[m
-[32m+[m[41m[m
-[32m+[m				[32mh2 {[m[41m[m
-[32m+[m					[32mmargin: 0;[m[41m[m
-[32m+[m					[32m// height: 38px; // two lines[m[41m[m
-[32m+[m[41m[m
-[32m+[m					[32moverflow: hidden;[m[41m[m
-[32m+[m					[32mwhite-space: nowrap;[m[41m[m
-[32m+[m					[32mtext-overflow: ellipsis;[m[41m[m
-[32m+[m				[32m}[m[41m[m
-[32m+[m[41m[m
-[32m+[m				[32mh5 {[m[41m[m
-[32m+[m					[32mmargin: 0;[m[41m[m
-[32m+[m				[32m}[m[41m[m
-[32m+[m[41m[m
-[32m+[m				[32mp {[m[41m[m
-[32m+[m					[32mfont-weight: 200;[m[41m[m
-[32m+[m				[32m}[m[41m[m
-[32m+[m			[32m}[m[41m[m
-[32m+[m		[32m}[m[41m[m
-[32m+[m	[32m}[m[41m[m
-[32m+[m[41m[m
-[32m+[m	[32m/*------------------------------------*\[m[41m[m
-[32m+[m		[32mERROR[m[41m[m
-[32m+[m	[32m\*------------------------------------*/[m[41m[m
-[32m+[m	[32m.error {[m[41m[m
-[32m+[m		[32mposition: absolute;[m[41m[m
-[32m+[m[41m[m
-[32m+[m		[32mtop: 30vh;[m[41m[m
-[32m+[m		[32mpadding: 30px;[m[41m[m
-[32m+[m[41m[m
-[32m+[m		[32mfont-size: calc(2px + 2vmin);[m[41m[m
-[32m+[m		[32mletter-spacing: 1px;[m[41m[m
-[32m+[m		[32mcolor: black;[m[41m[m
-[32m+[m		[32mbackground-color: rgba(255, 255, 255, .95);[m[41m[m
-[32m+[m[41m[m
-[32m+[m		[32mborder-radius: $radius * 3;[m[41m[m
-[32m+[m[41m[m
-[32m+[m		[32manimation-name: error;[m[41m[m
-[32m+[m		[32manimation-duration: 1s;[m[41m[m
-[32m+[m[41m[m
-[32m+[m		[32mh3 {[m[41m[m
- 			margin: 0;[m
- 		}[m
-[31m-		p.code {[m
-[32m+[m[41m[m
-[32m+[m		[32mp:nth-child(2) {[m[41m[m
-[32m+[m			[32mmargin-top: 0;[m[41m[m
-[32m+[m		[32m}[m[41m[m
-[32m+[m[41m[m
-[32m+[m		[32mbutton {[m[41m[m
- 			font-size: calc(2px + 2vmin);[m
-[31m-			font-family: "Courier New";[m
-[32m+[m			[32mfont-weight: 900;[m[41m[m
-[32m+[m			[32mletter-spacing: 1px;[m[41m[m
-[32m+[m			[32mcolor: white;[m[41m[m
-[32m+[m			[32mbackground-color: black;[m[41m[m
- [m
-[31m-			color: greenyellow;[m
-[31m-			background-color: rgba(0, 0, 0, .7);[m
-[32m+[m			[32mborder-radius: $radius;[m[41m[m
-[32m+[m			[32mborder: none;[m[41m[m
- [m
-[32m+[m			[32mmargin: 2px;[m[41m[m
- 			padding: 5px;[m
-[31m-			border-radius: 4px;[m
-[32m+[m		[32m}[m[41m[m
-[32m+[m	[32m}[m[41m[m
-[32m+[m[32m}[m[41m[m
- [m
-[31m-			position: relative;[m
-[31m-			top: 3px;[m
-[32m+[m[32m/*------------------------------------*\[m[41m[m
-[32m+[m	[32mREACTIVE[m[41m[m
-[32m+[m[32m\*------------------------------------*/[m[41m[m
-[32m+[m[32m@media only screen and (max-width: 600px) {[m[41m[m
-[32m+[m	[32m#app ul#feed {[m[41m[m
-[32m+[m		[32mflex-direction: column;[m[41m[m
-[32m+[m		[32malign-items: center;[m[41m[m
-[32m+[m[41m[m
-[32m+[m		[32mli {[m[41m[m
-[32m+[m			[32mflex-basis: 100%;[m[41m[m
-[32m+[m			[32mmax-width: 60%;[m[41m[m
-[32m+[m			[32mwidth: 100%;[m[41m[m
- 		}[m
- 	}[m
-[32m+[m[32m}[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m@media only screen and (min-width: 601px) and (max-width: 1300px) {[m[41m[m
-[32m+[m	[32m#app ul#feed li {[m[41m[m
-[32m+[m			[32mflex-basis: 40%;[m[41m[m
-[32m+[m			[32mmax-width: 40%;[m[41m[m
-[32m+[m			[32mwidth: 100%;[m[41m[m
-[32m+[m	[32m}[m[41m[m
-[32m+[m[32m}[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m/*------------------------------------*\[m[41m[m
-[32m+[m	[32mANIMATIONS[m[41m[m
-[32m+[m[32m\*------------------------------------*/[m[41m[m
-[32m+[m[32m@keyframes title {[m[41m[m
-[32m+[m	[32m0% {[m[41m[m
-[32m+[m		[32mcolor: white;[m[41m[m
-[32m+[m	[32m} 100% {[m[41m[m
-[32m+[m		[32mcolor: black;[m[41m[m
-[32m+[m	[32m}[m[41m[m
-[32m+[m[32m}[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m@keyframes input {[m[41m[m
-[32m+[m	[32m0% {[m[41m[m
-[32m+[m		[32mbackground-color: white;[m[41m[m
-[32m+[m	[32m} 100% {[m[41m[m
-[32m+[m		[32mbackground-color: black;[m[41m[m
-[32m+[m	[32m}[m[41m[m
-[32m+[m[32m}[m[41m[m
- [m
-[31m-	// #feed-display {[m
-[32m+[m[32m@keyframes error {[m[41m[m
-[32m+[m	[32m0% {[m[41m[m
-[32m+[m		[32mcolor: rgba(0, 0, 0, 0);[m[41m[m
-[32m+[m		[32mbackground-color: rgba(255, 255, 255, 0);[m[41m[m
-[32m+[m	[32m} 100% {[m[41m[m
-[32m+[m		[32mcolor: black;[m[41m[m
-[32m+[m		[32mbackground-color: rgba(255, 255, 255, .95);[m[41m[m
-[32m+[m	[32m}[m[41m[m
-[32m+[m[32m}[m[41m[m
- [m
-[31m-	// }[m
-[32m+[m[32m@keyframes feed {[m[41m[m
-[32m+[m	[32m0% {[m[41m[m
-[32m+[m		[32mbackground-color: rgba(255, 255, 255, 0);[m[41m[m
-[32m+[m		[32mcolor: rgba(255, 255, 255, 0);[m[41m[m
-[32m+[m	[32m} 100% {[m[41m[m
-[32m+[m		[32mbackground-color: black;[m[41m[m
-[32m+[m		[32mcolor: white;[m[41m[m
-[32m+[m	[32m}[m[41m[m
- }[m
- [m
-[31m-// TODO: add spinner animation[m
- @keyframes spinner {[m
-   from {[m
-     transform: rotate(0deg);[m
-[36m@@ -50,3 +286,29 @@[m
-     transform: rotate(360deg);[m
-   }[m
- }[m
-[32m+[m[32m@keyframes spinner-component-1 {[m[41m[m
-[32m+[m	[32m0% {[m[41m[m
-[32m+[m		[32mtransform: scale(1);[m[41m[m
-[32m+[m	[32m} 25% {[m[41m[m
-[32m+[m		[32mtransform: scale(.8);[m[41m[m
-[32m+[m	[32m} 50% {[m[41m[m
-[32m+[m		[32mtransform: scale(1);[m[41m[m
-[32m+[m	[32m} 75% {[m[41m[m
-[32m+[m		[32mtransform: scale(1.2);[m[41m[m
-[32m+[m	[32m} 100% {[m[41m[m
-[32m+[m		[32mtransform: scale(1);[m[41m[m
-[32m+[m	[32m}[m[41m[m
-[32m+[m[32m}[m[41m[m
-[32m+[m[32m@keyframes spinner-component-2 {[m[41m[m
-[32m+[m	[32m0% {[m[41m[m
-[32m+[m		[32mtransform: scale(1);[m[41m[m
-[32m+[m	[32m} 25% {[m[41m[m
-[32m+[m		[32mtransform: scale(1.2);[m[41m[m
-[32m+[m	[32m} 50% {[m[41m[m
-[32m+[m		[32mtransform: scale(1);[m[41m[m
-[32m+[m	[32m} 75% {[m[41m[m
-[32m+[m		[32mtransform: scale(.8);[m[41m[m
-[32m+[m	[32m} 100% {[m[41m[m
-[32m+[m		[32mtransform: scale(1);[m[41m[m
-[32m+[m	[32m}[m[41m[m
-[32m+[m[32m}[m[41m[m
-[1mdiff --git a/src/App.tsx b/src/App.tsx[m
-[1mindex 2164c59..5879dda 100644[m
-[1m--- a/src/App.tsx[m
-[1m+++ b/src/App.tsx[m
-[36m@@ -1,20 +1,25 @@[m
- import React from 'react';[m
- [m
- import { Provider as ReduxProvider } from 'react-redux';[m
-[31m-import { configureStore } from './modules';[m
-[32m+[m[32mimport { PersistGate } from 'redux-persist/integration/react';[m
-[32m+[m[32mimport { configureStore } from './redux';[m
- [m
-[31m-import { Form, Reader } from './components';[m
-[32m+[m[32mimport { Form, Reader, Spinner, Error } from './components';[m
- import './App.scss';[m
- [m
- export const store = configureStore((window as any).REDUX_INITIAL_DATA);[m
- [m
- function App() {[m
-   return ([m
-[31m-		<ReduxProvider store={store}>[m
-[31m-			<div id="app">[m
-[31m-				<Form />[m
-[31m-				<Reader />[m
-[31m-			</div>[m
-[32m+[m		[32m<ReduxProvider store={store.store}>[m
-[32m+[m			[32m<PersistGate loading={null} persistor={store.persistor}>[m
-[32m+[m				[32m<div id="app">[m
-[32m+[m					[32m<Form />[m
-[32m+[m					[32m<Spinner />[m
-[32m+[m					[32m<Reader />[m
-[32m+[m					[32m<Error />[m
-[32m+[m				[32m</div>[m
-[32m+[m			[32m</PersistGate>[m
- 		</ReduxProvider>[m
-   );[m
- }[m
-[1mdiff --git a/src/components/Form.tsx b/src/components/Form.tsx[m
-[1mindex bbd7d35..fe3f070 100644[m
-[1m--- a/src/components/Form.tsx[m
-[1m+++ b/src/components/Form.tsx[m
-[36m@@ -1,46 +1,40 @@[m
- import React, { Component } from 'react';[m
- [m
- import { connect } from "react-redux";[m
-[31m-import { ACTIONS } from "../modules";[m
-[32m+[m[32mimport { ACTIONS } from "../redux";[m[41m[m
- [m
- interface FormProps {[m
- 	fetchFeed(url: string): void,[m
- }[m
- [m
-[31m-interface FormInterface {[m
-[31m-	url: any,[m
-[32m+[m[32minterface FormState {[m[41m[m
-[32m+[m	[32murl: string,[m[41m[m
- }[m
- [m
-[31m-class Form extends Component<FormProps, FormInterface> {[m
-[32m+[m[32mclass Form extends Component<FormProps, FormState> {[m[41m[m
- 	constructor(props: FormProps) {[m
- 		super(props);[m
- 		this.state = {[m
- 			url: '',[m
- 		};[m
-[31m-[m
-[31m-		this.handleChange = this.handleChange.bind(this);[m
-[31m-    this.handleSubmit = this.handleSubmit.bind(this);[m
-   }[m
-[31m-[m
-[31m-  handleChange = (event: any) => {[m
-[31m-		this.setState({url: event.target.value});[m
-[31m-	}[m
-[31m-	[m
-[31m-  handleSubmit = (event: any) => {[m
-[31m-		event.preventDefault();[m
-[31m-		this.props.fetchFeed(this.state.url);[m
-[31m-	}[m
- 	[m
- 	render() {[m
-[32m+[m		[32mconst handleChange = (event: any) => {[m[41m[m
-[32m+[m			[32mthis.setState({url: event.target.value})[m[41m [m
-[32m+[m		[32m};[m[41m[m
-[32m+[m		[32mconst handleSubmit = (event: any): void => {[m[41m[m
-[32m+[m			[32mevent.preventDefault();[m[41m[m
-[32m+[m			[32mthis.props.fetchFeed(this.state.url);[m[41m[m
-[32m+[m		[32m}[m[41m[m
-[32m+[m[41m[m
- 		return ([m
- 			<header>[m
-[31m-				<p>avi's really simple</p>[m
-[31m-				<p className="code">Really Simple Syndication</p>[m
-[31m-				<p>syndicator</p>[m
-[32m+[m				[32m<h1><span>a</span>reses</h1>[m[41m[m
- [m
-[31m-				<form onSubmit={this.handleSubmit}>[m
-[31m-					<input type="text" value={this.state.url} onChange={this.handleChange} />[m
-[31m-					<input type="submit" value="fetch my feed!" />[m
-[32m+[m				[32m<form onSubmit={handleSubmit}>[m[41m[m
-[32m+[m					[32m<input type="text" value={this.state.url} onChange={handleChange} />[m[41m[m
-[32m+[m					[32m<input type="submit" value="fetch feed" />[m[41m[m
- 				</form>[m
- 			</header>[m
- 		)[m
-[1mdiff --git a/src/components/Reader.tsx b/src/components/Reader.tsx[m
-[1mindex 2fac02c..f15dbeb 100644[m
-[1m--- a/src/components/Reader.tsx[m
-[1m+++ b/src/components/Reader.tsx[m
-[36m@@ -1,63 +1,35 @@[m
- import React, { Component } from 'react';[m
- import { connect } from 'react-redux';[m
-[32m+[m[32mimport moment from 'moment';[m[41m[m
- [m
- interface ReaderProps {[m
- 	feed: [],[m
-[32m+[m	[32misFetching: boolean,[m[41m[m
- }[m
- [m
-[31m-interface ReaderState {[m
-[31m-	renderedItems: any,[m
-[31m-	numItemsRendered: number,[m
-[31m-}[m
-[31m-[m
-[31m-class Reader extends Component<ReaderProps, ReaderState> {[m
-[31m-	timer!: NodeJS.Timeout;[m
-[31m-[m
-[31m-	constructor(props: ReaderProps) {[m
-[31m-		super(props)[m
-[31m-		this.state = {[m
-[31m-			renderedItems: [],[m
-[31m-			numItemsRendered: 0,[m
-[31m-		}[m
-[31m-	}[m
-[31m-[m
-[31m-	componentDidUpdate() {[m
-[31m-		// check that feed is populated[m
-[31m-		if(this.props.feed.length !== 0)[m
-[31m-			this.scheduleNextUpdate();[m
-[31m-	}[m
-[31m-[m
-[31m-	componentWillUnmount() {[m
-[31m-    clearTimeout(this.timer)[m
-[31m-  }[m
-[31m-[m
-[31m-	// sets timer for each item added to renderedItems[m
-[31m-	scheduleNextUpdate = () => {[m
-[31m-		this.timer = setTimeout(this.updateRenderedItems, 1000);[m
-[31m-	}[m
-[31m-[m
-[31m-	/**[m
-[31m-	 * TODO[m
-[31m-	 */[m
-[31m-	updateRenderedItems = () => {[m
-[31m-		this.setState({[m
-[31m-      renderedItems: this.state.renderedItems.concat(this.props.feed[this.state.numItemsRendered]),[m
-[31m-      numItemsRendered: this.state.numItemsRendered + 1,[m
-[31m-		});[m
-[31m-[m
-[31m-  	if(this.state.numItemsRendered < this.props.feed.length) {[m
-[31m-      this.scheduleNextUpdate();[m
-[31m-		}[m
-[32m+[m[32mclass Reader extends Component<ReaderProps> {[m[41m[m
-[32m+[m	[32mfadeIn = () => {[m[41m[m
-[32m+[m		[32mreturn { backgroundColor: 'blue', }[m[41m[m
- 	}[m
- [m
- 	render() {[m
-[31m-		return ([m
-[31m-			<div id="feed">[m
-[31m-				{this.state.renderedItems.map((item: any) =>[m
-[31m-					<p key={item.guid}>{item.title}</p>[m
-[31m-				)}[m
-[31m-			</div>[m
-[31m-		)[m
-[32m+[m		[32m// checks for loading[m[41m[m
-[32m+[m		[32mif(!this.props.isFetching)[m[41m[m
-[32m+[m			[32mreturn([m[41m[m
-[32m+[m				[32m<ul id="feed">[m[41m[m
-[32m+[m					[32m{this.props.feed.map((item: any, i) =>[m[41m[m
-[32m+[m						[32m<li key={i}>[m[41m[m
-[32m+[m							[32m<a style={this.fadeIn()} href={item.guid}>[m[41m[m
-[32m+[m								[32m<h2>{item.title}</h2>[m[41m[m
-[32m+[m								[32m<h5>{moment(item.isoDate).fromNow()}</h5>[m[41m[m
-[32m+[m								[32m<p>{item.contentSnippet}</p>[m[41m[m
-[32m+[m							[32m</a>[m[41m[m
-[32m+[m						[32m</li>[m[41m[m
-[32m+[m					[32m)}[m[41m[m
-[32m+[m				[32m</ul>[m[41m[m
-[32m+[m			[32m)[m[41m[m
-[32m+[m		[32melse[m[41m[m
-[32m+[m			[32mreturn null;[m[41m[m
- 	}[m
- }[m
- [m
-[1mdiff --git a/src/components/Spinner.tsx b/src/components/Spinner.tsx[m
-[1mnew file mode 100644[m
-[1mindex 0000000..8a2c919[m
-[1m--- /dev/null[m
-[1m+++ b/src/components/Spinner.tsx[m
-[36m@@ -0,0 +1,39 @@[m
-[32m+[m[32mimport React, { Component } from 'react';[m[41m[m
-[32m+[m[32mimport { connect } from "react-redux";[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32minterface SpinnerProps {[m[41m[m
-[32m+[m	[32misFetching: boolean;[m[41m[m
-[32m+[m[32m}[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32mclass Spinner extends Component<SpinnerProps> {[m[41m[m
-[32m+[m	[32mrandomAnimation = () => {[m[41m[m
-[32m+[m		[32mreturn { animationDelay: Math.random() / 3.2 + 's' };[m[41m[m
-[32m+[m	[32m}[m[41m[m
-[32m+[m[41m[m
-[32m+[m	[32mrenderSpinner =() => {[m[41m[m
-[32m+[m		[32mif(this.props.isFetching) {[m[41m[m
-[32m+[m			[32mreturn ([m[41m[m
-[32m+[m				[32m<div id="spinner">[m[41m[m
-[32m+[m					[32m<div style={this.randomAnimation()} className="spinner-component" id="spin-1" />[m[41m[m
-[32m+[m					[32m<div style={this.randomAnimation()} className="spinner-component" id="spin-2" />[m[41m[m
-[32m+[m					[32m<br />[m[41m[m
-[32m+[m					[32m<div style={this.randomAnimation()} className="spinner-component" id="spin-3" />[m[41m[m
-[32m+[m					[32m<div style={this.randomAnimation()} className="spinner-component" id="spin-4" />[m[41m[m
-[32m+[m				[32m</div>[m[41m[m
-[32m+[m			[32m);[m[41m[m
-[32m+[m		[32m} else[m[41m[m
-[32m+[m			[32mreturn null;[m[41m[m
-[32m+[m	[32m}[m[41m[m
-[32m+[m[41m[m
-[32m+[m	[32mrender() {[m[41m[m
-[32m+[m		[32mreturn (this.renderSpinner());[m[41m[m
-[32m+[m	[32m}[m[41m[m
-[32m+[m[32m}[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32mconst mapStateToProps = (state: any) => ({[m[41m[m
-[32m+[m	[32misFetching: state.isFetching,[m[41m[m
-[32m+[m[32m});[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32mexport default connect([m[41m[m
-[32m+[m	[32mmapStateToProps,[m[41m[m
-[32m+[m[32m)(Spinner);[m[41m[m
-[1mdiff --git a/src/components/index.tsx b/src/components/index.tsx[m
-[1mindex 799dd50..5e3fb4e 100644[m
-[1m--- a/src/components/index.tsx[m
-[1m+++ b/src/components/index.tsx[m
-[36m@@ -1,2 +1,4 @@[m
- export { default as Form } from './Form';[m
- export { default as Reader } from './Reader';[m
-[32m+[m[32mexport { default as Spinner } from './Spinner';[m[41m[m
-[32m+[m[32mexport { default as Error } from './Error';[m
-\ No newline at end of file[m
-[1mdiff --git a/src/modules/Store.tsx b/src/modules/Store.tsx[m
-[1mdeleted file mode 100644[m
-[1mindex d66ad5b..0000000[m
-[1m--- a/src/modules/Store.tsx[m
-[1m+++ /dev/null[m
-[36m@@ -1,19 +0,0 @@[m
-[31m-import { createStore, applyMiddleware, compose } from 'redux';[m
-[31m-import logger from 'redux-logger'; // logger with default options[m
-[31m-import thunkMiddleware from 'redux-thunk'[m
-[31m-[m
-[31m-import { reducers } from '.';[m
-[31m-[m
-[31m-export default function configureStore(initialState: any) {[m
-[31m-	// store enhancer for Redux DevTools[m
-[31m-	const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;[m
-[31m-  const store = createStore([m
-[31m-		reducers,[m
-[31m-		initialState,[m
-[31m-		composeEnhancers(applyMiddleware([m
-[31m-			thunkMiddleware,[m
-[31m-			logger // https://github.com/LogRocket/redux-logger/issues/302[m
-[31m-			)),[m
-[31m-		);[m
-[31m-  return store;[m
-[31m-}[m
-[1mdiff --git a/src/modules/Actions.tsx b/src/redux/Actions.tsx[m
-[1msimilarity index 72%[m
-[1mrename from src/modules/Actions.tsx[m
-[1mrename to src/redux/Actions.tsx[m
-[1mindex d042e50..9d599a3 100644[m
-[1m--- a/src/modules/Actions.tsx[m
-[1m+++ b/src/redux/Actions.tsx[m
-[36m@@ -2,9 +2,9 @@[m [mimport Parser from 'rss-parser';[m
- [m
- // action type(s)[m
- const Types = {[m
-[31m-	REQUEST_FEED: "REQUEST_FEED",[m
-[31m-	RECIEVE_FEED: "RECIEVE_FEED",[m
-[31m-	ERROR: "ERROR",[m
-[32m+[m	[32mREQUEST_FEED: 'REQUEST_FEED',[m[41m[m
-[32m+[m	[32mRECIEVE_FEED: 'RECIEVE_FEED',[m[41m[m
-[32m+[m	[32mERROR: 'ERROR',[m[41m[m
- };[m
- [m
- // action(s)[m
-[36m@@ -18,6 +18,11 @@[m [mconst recieveFeed = (feed: any) => ({[m
- 	payload: feed.items,[m
- });[m
- [m
-[32m+[m[32mconst catchError = (error: any) => ({[m[41m[m
-[32m+[m	[32mtype: Types.ERROR,[m[41m[m
-[32m+[m	[32mpayload: error.message || 'Something went wrong.',[m[41m[m
-[32m+[m[32m});[m[41m[m
-[32m+[m[41m[m
- /**[m
-  * Action creator that handles asynchronous requests.[m
-  * [m
-[36m@@ -35,17 +40,17 @@[m [mconst fetchFeed = (url: any) => {[m
- 	return async(dispatch: any) => {[m
- 		dispatch(requestFeed(url))[m
- 		// parser returns feed as a JSON object[m
-[31m-		dispatch(recieveFeed(await parser.parseURL(PROXY_URL + url)));[m
-[32m+[m		[32mparser.parseURL(PROXY_URL + url, (err, feed) => {[m[41m[m
-[32m+[m			[32mif(err)[m[41m[m
-[32m+[m				[32mdispatch(catchError(err));[m[41m[m
-[32m+[m			[32melse[m[41m[m
-[32m+[m				[32mdispatch(recieveFeed(feed));[m[41m[m
-[32m+[m		[32m});[m[41m[m
-[32m+[m		[32m;[m[41m[m
- 	}[m
- };[m
- [m
-[31m-const error = (error: any) => ({[m
-[31m-	type: Types.ERROR,[m
-[31m-	payload: error,[m
-[31m-});[m
-[31m-[m
- export default {[m
- 	fetchFeed,[m
-[31m-	error,[m
- 	Types,[m
- };[m
-[1mdiff --git a/src/modules/Reducers.tsx b/src/redux/Reducers.tsx[m
-[1msimilarity index 81%[m
-[1mrename from src/modules/Reducers.tsx[m
-[1mrename to src/redux/Reducers.tsx[m
-[1mindex bb28b12..fcd5c68 100644[m
-[1m--- a/src/modules/Reducers.tsx[m
-[1m+++ b/src/redux/Reducers.tsx[m
-[36m@@ -3,6 +3,7 @@[m [mimport  { ACTIONS } from '.';[m
- const defaultState = {[m
- 	isFetching: false,[m
- 	error: false,[m
-[32m+[m	[32merrorMessage: '',[m[41m[m
- 	feed: [],[m
- }[m
- [m
-[36m@@ -11,6 +12,7 @@[m [mconst feed = (state = defaultState, action: any) => {[m
- 	 	case ACTIONS.Types.REQUEST_FEED:[m
- 			return Object.assign({}, state, {[m
- 				isFetching: true,[m
-[32m+[m				[32merror: false,[m[41m[m
- 			});[m
- 		case ACTIONS.Types.RECIEVE_FEED:[m
- 			return Object.assign({}, state, {[m
-[36m@@ -20,7 +22,9 @@[m [mconst feed = (state = defaultState, action: any) => {[m
- 			});[m
- 		case ACTIONS.Types.ERROR:[m
- 			return Object.assign({}, state, {[m
-[32m+[m				[32misFetching: false,[m[41m[m
- 				error: true,[m
-[32m+[m				[32merrorMessage: action.payload,[m[41m[m
- 			});[m
- 		default:[m
- 			return state;[m
-[1mdiff --git a/src/redux/Store.tsx b/src/redux/Store.tsx[m
-[1mnew file mode 100644[m
-[1mindex 0000000..a457ecf[m
-[1m--- /dev/null[m
-[1m+++ b/src/redux/Store.tsx[m
-[36m@@ -0,0 +1,28 @@[m
-[32m+[m[32mimport { createStore, applyMiddleware, compose } from 'redux';[m[41m[m
-[32m+[m[32mimport logger from 'redux-logger';[m[41m[m
-[32m+[m[32mimport thunkMiddleware from 'redux-thunk'[m[41m[m
-[32m+[m[32mimport { persistStore, persistReducer } from 'redux-persist';[m[41m[m
-[32m+[m[32mimport storage from 'redux-persist/lib/storage';[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32mimport { rootReducer } from '.';[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32mconst persistConfig = {[m[41m[m
-[32m+[m[32m  key: 'root',[m[41m[m
-[32m+[m[32m  storage,[m[41m[m
-[32m+[m[32m}[m[41m[m
-[32m+[m[32mconst persistedReducer = persistReducer(persistConfig, rootReducer)[m[41m[m
-[32m+[m[32m// enhancer for Redux DevTools[m[41m[m
-[32m+[m[32mconst composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32mexport default function configureStore(initialState: any) {[m[41m[m
-[32m+[m[32m  const store = createStore([m[41m[m
-[32m+[m		[32mpersistedReducer,[m[41m[m
-[32m+[m		[32minitialState,[m[41m[m
-[32m+[m		[32mcomposeEnhancers(applyMiddleware([m[41m[m
-[32m+[m			[32mthunkMiddleware,[m[41m[m
-[32m+[m			[32mlogger // https://github.com/LogRocket/redux-logger/issues/302[m[41m[m
-[32m+[m			[32m)),[m[41m[m
-[32m+[m		[32m);[m[41m[m
-[32m+[m	[32mconst persistor = persistStore(store);[m[41m[m
-[32m+[m[32m  return { store, persistor };[m[41m[m
-[32m+[m[32m}[m[41m[m
-[1mdiff --git a/src/modules/index.tsx b/src/redux/index.tsx[m
-[1msimilarity index 64%[m
-[1mrename from src/modules/index.tsx[m
-[1mrename to src/redux/index.tsx[m
-[1mindex 6ccdd2e..230ebd3 100644[m
-[1m--- a/src/modules/index.tsx[m
-[1m+++ b/src/redux/index.tsx[m
-[36m@@ -1,3 +1,3 @@[m
- export { default as ACTIONS } from './Actions';[m
-[31m-export { default as reducers } from './Reducers';[m
-[32m+[m[32mexport { default as rootReducer } from './Reducers';[m[41m[m
- export { default as configureStore } from './Store';[m
