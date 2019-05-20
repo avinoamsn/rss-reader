@@ -5,37 +5,78 @@ import moment from 'moment';
 interface ReaderProps {
 	feed: [],
 	isFetching: boolean,
-	error: boolean,
+	renderedItems: [],
+	numRenderedItems: number,
 }
 
 interface ReaderState {
-	renderedItems: any,
+	renderedItems: any[],
 	numItemsRendered: number,
 }
 
 class Reader extends Component<ReaderProps, ReaderState> {
-	errorHandler() {
-		let errorMsg = this.props.feed.toString();
+	timer!: NodeJS.Timeout;
+	i!: number;
 
-		// basic error checking
-		if(errorMsg.includes('Malformed comment') ||
-		errorMsg.includes('Invalid character') 		|| 
-		errorMsg.includes('Attribute without value'))	// case not an RSS feed
-			errorMsg = 'Not a valid feed.';
-		else if(errorMsg.includes('404'))	// case resource unavailable
-			errorMsg = 'The resource is not available.'
+	constructor(props: ReaderProps) {
+		super(props)
+		this.state = {
+			renderedItems: [],
+			numItemsRendered: 0,
+		}
 
-		return(
-			<div className="error">Error: {errorMsg}</div>
-		)
+		this.i = 0;
+	}
+
+	// sets timer for each item added to renderedItems
+	scheduleNextUpdate = () => {
+		this.timer = setTimeout(this.updateRenderedItems, 50);
+	}
+
+	/**
+ 	* TODO
+ 	*/
+	updateRenderedItems = () => {
+		this.setState({
+			renderedItems: this.state.renderedItems.concat(this.props.feed[this.state.numItemsRendered]),
+			numItemsRendered: this.state.numItemsRendered + 1,
+		});
+
+		if(this.state.numItemsRendered < this.props.feed.length) {
+			this.scheduleNextUpdate();
+		} // else {
+		// 	// resets numItemsRendered for following render
+		// 	this.setState({ numItemsRendered: -1 });
+		// }
+	}
+
+	// arrayEquals = (): boolean => {
+	// 	this.props.feed.forEach((el, i) => {
+	// 		if(el !== this.state.renderedItems[i]) {
+	// 			console.log('false')
+	// 			return false;}
+	// 	});
+	// 	return true;
+	// }
+
+	componentDidUpdate() {
+		// starts the rendering loop
+		if(this.props.feed.length !== 0 && this.state.numItemsRendered === 0)
+			this.scheduleNextUpdate();
+	}
+
+	// component doesn't currently unmount, but this is necessary in that scenario
+	componentWillUnmount() {
+		clearTimeout(this.timer);
 	}
 
 	render() {
-		// checks for spinner & error
-		if(!this.props.isFetching && !this.props.error)
-			return(
+		console.log(this.state.numItemsRendered);
+		// checks for loading
+		if (!this.props.isFetching)
+			return (
 				<ul id="feed">
-					{this.props.feed.map((item: any, i) =>
+					{this.state.renderedItems.map((item: any, i: number) =>
 						<li key={i}>
 							<a href={item.guid}>
 								<h2>{item.title}</h2>
@@ -46,17 +87,14 @@ class Reader extends Component<ReaderProps, ReaderState> {
 					)}
 				</ul>
 			)
-		else if(!this.props.isFetching && this.props.error) // case error
-			return this.errorHandler();
 		else
-			return null; // case isFetching
+			return null;
 	}
 }
 
 const mapStateToProps = (state: any) => ({
 	feed: state.feed,
 	isFetching: state.isFetching,
-	error: state.error,
 });
 
 export default connect(mapStateToProps)(Reader)

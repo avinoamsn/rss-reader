@@ -3,7 +3,10 @@ import  { ACTIONS } from '.';
 const defaultState = {
 	isFetching: false,
 	error: false,
+	errorMessage: '',
 	feed: [],
+	renderedItems: [],
+	numRenderedItems: 0,
 }
 
 const feed = (state = defaultState, action: any) => {
@@ -11,6 +14,7 @@ const feed = (state = defaultState, action: any) => {
 	 	case ACTIONS.Types.REQUEST_FEED:
 			return Object.assign({}, state, {
 				isFetching: true,
+				error: false,
 			});
 		case ACTIONS.Types.RECIEVE_FEED:
 			return Object.assign({}, state, {
@@ -22,7 +26,12 @@ const feed = (state = defaultState, action: any) => {
 			return Object.assign({}, state, {
 				isFetching: false,
 				error: true,
-				feed: action.payload,
+				errorMessage: action.payload,
+			});
+		case ACTIONS.Types.RENDER_ITEM:
+			return Object.assign({}, state, {
+				renderedItems: state.renderedItems.concat(state.feed[state.numRenderedItems]),
+				numRenderedItems: state.numRenderedItems + 1,
 			});
 		default:
 			return state;

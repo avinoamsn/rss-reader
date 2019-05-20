@@ -4,7 +4,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { configureStore } from './redux';
 
-import { Form, Reader, Spinner } from './components';
+import { Form, Reader, Spinner, Error } from './components';
 import './App.scss';
 
 export const store = configureStore((window as any).REDUX_INITIAL_DATA);
@@ -17,6 +17,7 @@ function App() {
 					<Form />
 					<Spinner />
 					<Reader />
+					<Error />
 				</div>
 			</PersistGate>
 		</ReduxProvider>

@@ -5,6 +5,7 @@ const Types = {
 	REQUEST_FEED: 'REQUEST_FEED',
 	RECIEVE_FEED: 'RECIEVE_FEED',
 	ERROR: 'ERROR',
+	RENDER_ITEM: 'RENDER_ITEM',
 };
 
 // action(s)
@@ -21,6 +22,11 @@ const recieveFeed = (feed: any) => ({
 const catchError = (error: any) => ({
 	type: Types.ERROR,
 	payload: error.message || 'Something went wrong.',
+});
+
+const renderItem = (item: any) => ({
+	type: Types.RENDER_ITEM,
+	payload: item,
 });
 
 /**
@@ -50,13 +56,8 @@ const fetchFeed = (url: any) => {
 	}
 };
 
-const error = (error: any) => ({
-	type: Types.ERROR,
-	payload: error,
-});
-
 export default {
 	fetchFeed,
-	error,
+	renderItem,
 	Types,
 };
