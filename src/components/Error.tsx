@@ -14,7 +14,7 @@ class Error extends Component<ErrorProps, ErrorState> {
 	constructor(props: any) {
 		super(props);
 		this.state = {
-			show: true,
+			show: false,
 		};
 	}
 
