@@ -59,5 +59,6 @@ const fetchFeed = (url: any) => {
 export default {
 	fetchFeed,
 	renderItem,
+	catchError,
 	Types,
 };

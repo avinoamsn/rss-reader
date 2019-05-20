@@ -20,7 +20,9 @@ const feed = (state = defaultState, action: any) => {
 			return Object.assign({}, state, {
 				isFetching: false,
 				error: false,
-				feed: action.payload
+				feed: action.payload,
+				renderedItems: [],
+				numRenderedItems: 0,
 			});
 		case ACTIONS.Types.ERROR:
 			return Object.assign({}, state, {
