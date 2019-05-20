@@ -13,6 +13,7 @@ function App() {
   return (
 		<ReduxProvider store={store.store}>
 			<PersistGate loading={null} persistor={store.persistor}>
+			<div id="fb-root"></div>				
 				<div id="app">
 					<Form />
 					<Spinner />

@@ -2,9 +2,9 @@ import  { ACTIONS } from '.';
 
 const defaultState = {
 	isFetching: false,
+	feed: [],
 	error: false,
 	errorMessage: '',
-	feed: [],
 	renderedItems: [],
 	numRenderedItems: 0,
 }

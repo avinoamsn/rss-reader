@@ -30,10 +30,7 @@ class Reader extends Component<ReaderProps> {
 		this.timer = setTimeout(this.updateRenderedItems, 40);
 	}
 
-	/**
-	 * Renders each item from the feed successively, with a timeout in between
-	 * each iteration.
- 	*/
+	// Renders each item from the feed successively, with a timeout in between each iteration.
 	updateRenderedItems = (): void => {
 		this.props.renderItem(this.props.feed[this.props.numRenderedItems]);
 

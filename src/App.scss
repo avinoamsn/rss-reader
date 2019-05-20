@@ -218,7 +218,7 @@ $radius: 4px;
 /*------------------------------------*\
 	REACTIVE
 \*------------------------------------*/
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 860px) {
 	#app ul#feed {
 		flex-direction: column;
 		align-items: center;
@@ -231,7 +231,7 @@ $radius: 4px;
 	}
 }
 
-@media only screen and (min-width: 701px) and (max-width: 1330px) {
+@media only screen and (min-width: 861px) and (max-width: 1330px) {
 	#app ul#feed {
 		flex-direction: row;
 
