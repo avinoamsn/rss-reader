@@ -17,23 +17,24 @@ class Form extends Component<FormProps, FormState> {
 		this.state = {
 			url: '',
 		};
-  }
+	}
+	
+	handleChange = (event: any) => {
+		this.setState({url: event.target.value}) 
+	};
+	handleSubmit = (event: any): void => {
+		event.preventDefault();
+		this.props.fetchFeed(this.state.url);
+	}
 	
 	render() {
-		const handleChange = (event: any) => {
-			this.setState({url: event.target.value}) 
-		};
-		const handleSubmit = (event: any): void => {
-			event.preventDefault();
-			this.props.fetchFeed(this.state.url);
-		}
 
 		return (
 			<header>
 				<h1><span>a</span>reses</h1>
 
-				<form onSubmit={handleSubmit}>
-					<input type="text" value={this.state.url} onChange={handleChange} />
+				<form onSubmit={this.handleSubmit}>
+					<input type="text" value={this.state.url} onChange={this.handleChange} />
 					<input type="submit" value="fetch feed" />
 				</form>
 			</header>
