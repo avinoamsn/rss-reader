@@ -28,7 +28,6 @@ class Form extends Component<FormProps, FormState> {
 	}
 	
 	render() {
-
 		return (
 			<header>
 				<h1><span>a</span>reses</h1>
