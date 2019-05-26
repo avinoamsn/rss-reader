@@ -1,5 +1,5 @@
-import Parser from 'rss-parser';
-import { Types } from '.';
+import Parser from 'rss-parser'
+import { Types } from '.'
 
 /**
  * Indicates feed is being fetched.
@@ -10,7 +10,7 @@ import { Types } from '.';
 const requestFeed = (url: string) => ({
 	type: Types.REQUEST_FEED,
 	payload: url,
-});
+})
 
 /**
  * Indicates that feed has been recieved.
@@ -20,7 +20,7 @@ const requestFeed = (url: string) => ({
 const recieveFeed = (feed: any) => ({
 	type: Types.RECIEVE_FEED,
 	payload: feed.items,
-});
+})
 
 /**
  * Indicates that the fetch has returned an error.
@@ -30,7 +30,7 @@ const recieveFeed = (feed: any) => ({
 const catchError = (error: any) => ({
 	type: Types.ERROR,
 	payload: error.message || 'Something went wrong.',
-});
+})
 
 /**
  * Indicates that the next item from feed will be added to the
@@ -41,7 +41,7 @@ const catchError = (error: any) => ({
 const renderItem = (item: any) => ({
 	type: Types.RENDER_ITEM,
 	payload: item,
-});
+})
 
 /**
  * Handles asynchronous request for RSS feed.
@@ -54,25 +54,25 @@ const renderItem = (item: any) => ({
 const fetchFeed = (url: any) => {
 	// proxy server to avoid CORS, clone of https://github.com/Rob--W/cors-anywhere/
 	// there is likely a better way to handle this on a prod server, but this works for now
-	const PROXY_URL = 'https://boiling-citadel-49650.herokuapp.com/';
-	const parser = new Parser();
+	const PROXY_URL = 'https://boiling-citadel-49650.herokuapp.com/'
+	const parser = new Parser()
 
 	return async(dispatch: any) => {
 		dispatch(requestFeed(url))
 		// parser returns feed as a JSON object
 		parser.parseURL(PROXY_URL + url, (err, feed) => {
 			if(err)
-				dispatch(catchError(err));
+				dispatch(catchError(err))
 			else
-				dispatch(recieveFeed(feed));
-		});
-		;
+				dispatch(recieveFeed(feed))
+		})
+		
 	}
-};
+}
 
 export default {
 	fetchFeed,
 	renderItem,
 	catchError,
 	Types,
-};
+}

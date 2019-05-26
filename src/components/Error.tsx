@@ -1,5 +1,5 @@
-import React, { useState, useEffect, FunctionComponent, memo } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect, FunctionComponent, memo } from 'react'
+import { connect } from 'react-redux'
 
 interface ErrorProps {
 	error: boolean,
@@ -10,10 +10,10 @@ interface ErrorProps {
  * @TODO use reducer to set error to false once dismissed(?)
  */
 const Error: FunctionComponent<ErrorProps> = memo(({ error, errorMessage }) => {
-	const [show, setShow] = useState(false);
+	const [show, setShow] = useState(false)
 
 	// avoid infinite loop by checking if error & errorMessage have changed
-	useEffect(() => setShow(true), [error, errorMessage]);
+	useEffect(() => setShow(true), [error, errorMessage])
 
 	if(error && show)
 		return(
@@ -23,14 +23,14 @@ const Error: FunctionComponent<ErrorProps> = memo(({ error, errorMessage }) => {
 				<p>This may not be a valid RSS feed. Please try a different URL.</p>
 			<button onClick={e => setShow(false)}>dismiss</button>
 			</div>
-		);
+		)
 	else
-		return null;
+		return null
 })
 
 const mapStateToProps = (state: any) => ({
 	error: state.error,
 	errorMessage: state.errorMessage,
-});
+})
 
-export default connect(mapStateToProps)(Error);
+export default connect(mapStateToProps)(Error)

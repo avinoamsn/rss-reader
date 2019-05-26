@@ -6,4 +6,4 @@ export default {
 
 	// feed rendering
 	RENDER_ITEM: 'RENDER_ITEM',
-};
+}

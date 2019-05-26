@@ -1,7 +1,7 @@
-import React, { FunctionComponent, useEffect, memo } from 'react';
-import { connect } from 'react-redux';
-import moment from 'moment';
-import { ACTIONS } from '../redux';
+import React, { FunctionComponent, useEffect, memo } from 'react'
+import { connect } from 'react-redux'
+import moment from 'moment'
+import { ACTIONS } from '../redux'
 
 interface ReaderProps {
 	feed: [],
@@ -11,7 +11,7 @@ interface ReaderProps {
 	renderItem(item: any): void,
 }
 
-let timer: NodeJS.Timeout; // timeout subscription object
+let timer: NodeJS.Timeout // timeout subscription object
 
 const Reader: FunctionComponent<ReaderProps> = memo(({
 	feed,
@@ -28,19 +28,19 @@ const Reader: FunctionComponent<ReaderProps> = memo(({
 	 */
 	useEffect(() => {
 		if(feed.length !== 0 && numRenderedItems === 0)
-			scheduleNextUpdate();
+			scheduleNextUpdate()
 
 		return () => {
 			if(feed.length === numRenderedItems)
-				clearTimeout(timer);
+				clearTimeout(timer)
 		}
-	});
+	})
 
 	/**
 	 * Sets the timeout subscription for each item added to renderedItems.
 	 */
 	const scheduleNextUpdate = (): void => {
-		timer = setTimeout(updateRenderedItems, 40);
+		timer = setTimeout(updateRenderedItems, 40)
 	}
 
 	/**
@@ -48,10 +48,10 @@ const Reader: FunctionComponent<ReaderProps> = memo(({
 	 * between each iteration.
 	 */
 	const updateRenderedItems = (): void => {
-		renderItem(feed[numRenderedItems]);
+		renderItem(feed[numRenderedItems])
 
 		if(feed.length > numRenderedItems)
-			scheduleNextUpdate();
+			scheduleNextUpdate()
 	}
 
 	/**
@@ -73,19 +73,19 @@ const Reader: FunctionComponent<ReaderProps> = memo(({
 			</ul>
 		)
 	else
-		return null;
-});
+		return null
+})
 
 const mapStateToProps = (state: any) => ({
 	feed: state.feed,
 	isFetching: state.isFetching,
 	renderedItems: state.renderedItems,
 	numRenderedItems: state.numRenderedItems,
-});
+})
 
 const mapDispatchToProps = (dispatch: any) => ({
 	renderItem: (item: any) => dispatch(ACTIONS.renderItem(item)),
-});
+})
 
 export default connect(
 	mapStateToProps,

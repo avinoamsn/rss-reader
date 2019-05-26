@@ -1,18 +1,18 @@
-import React, { useState, FunctionComponent, memo } from 'react';
+import React, { useState, FunctionComponent, memo } from 'react'
 
-import { connect } from "react-redux";
-import { ACTIONS } from "../redux";
+import { connect } from "react-redux"
+import { ACTIONS } from "../redux"
 
 interface FormProps {
 	fetchFeed(url: string): void,
 }
 
 const Form: FunctionComponent<FormProps> = memo(({ fetchFeed }) => {
-	const [url, setUrl] = useState('');
+	const [url, setUrl] = useState('')
 
 	const handleSubmit = (e: any) => {
-		e.preventDefault();
-		fetchFeed(url);
+		e.preventDefault()
+		fetchFeed(url)
 	}
 
 	return (
@@ -29,9 +29,9 @@ const Form: FunctionComponent<FormProps> = memo(({ fetchFeed }) => {
 
 const mapDispatchToProps = (dispatch: any) => ({
 	fetchFeed: (url: string) => dispatch(ACTIONS.fetchFeed(url)),
-});
+})
 
 export default connect(
 	null, // https://tinyurl.com/y63rhvg5
 	mapDispatchToProps,
-)(Form);
+)(Form)

@@ -1,10 +1,10 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import logger from 'redux-logger';
+import { createStore, applyMiddleware, compose } from 'redux'
+import logger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 
-import { rootReducer } from '.';
+import { rootReducer } from '.'
 
 const persistConfig = {
   key: 'root',
@@ -15,7 +15,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 // enhancer for Redux DevTools
-const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 export default function configureStore(initialState: any) {
   const store = createStore(
@@ -25,7 +25,7 @@ export default function configureStore(initialState: any) {
 			thunkMiddleware,
 			logger // https://github.com/LogRocket/redux-logger/issues/302
 			)),
-		);
-	const persistor = persistStore(store);
-  return { store, persistor };
+		)
+	const persistor = persistStore(store)
+  return { store, persistor }
 }
