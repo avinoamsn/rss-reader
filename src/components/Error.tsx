@@ -22,8 +22,9 @@ class Error extends Component<ErrorProps, ErrorState> {
 		this.setState({ show: true });
 	}
 
+	handleHide = () => this.setState({ show: false });
+
 	render() {
-		const handleHide = () => this.setState({ show: false });
 
 		if(this.props.error && this.state.show)
 			return(
@@ -31,7 +32,7 @@ class Error extends Component<ErrorProps, ErrorState> {
 					<h3>ERROR:</h3> 
 					<p>{this.props.errorMessage}</p>
 					<p>This may not be a valid RSS feed. Please try a different URL.</p>
-					<button onClick={handleHide}>dismiss</button>
+					<button onClick={this.handleHide}>dismiss</button>
 				</div>
 			);
 		else
