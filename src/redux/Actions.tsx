@@ -30,7 +30,7 @@ const renderItem = (item: any) => ({
 });
 
 /**
- * Action creator that handles asynchronous requests.
+ * Action creator that handles asynchronous requests for RSS feeds.
  * 
  * Redux-thunk lets us pass the dispatch method as an argument to the returned
  * function, which in turn lets the function dispatch actions itself.

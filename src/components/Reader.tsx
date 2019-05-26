@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent, useEffect, memo } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { ACTIONS } from '../redux';
@@ -11,54 +11,69 @@ interface ReaderProps {
 	renderItem(item: any): void,
 }
 
-class Reader extends Component<ReaderProps> {
-	timer!: NodeJS.Timeout;
+let timer: NodeJS.Timeout; // timeout subscription object
 
-	componentDidUpdate() {
-		// starts the rendering loop
-		if(this.props.feed.length !== 0 && this.props.numRenderedItems === 0)
-			this.scheduleNextUpdate();
+const Reader: FunctionComponent<ReaderProps> = memo(({
+	feed,
+	isFetching,
+	renderedItems,
+	numRenderedItems,
+	renderItem,
+}) => {
+	/**
+	 * Initiates the rendering loop when numRenderedItems is reset.
+	 * 
+	 * The return function will clear the timeout subscription once each
+	 * item in the feed is rendered. Similar to componentDidUnmount().
+	 */
+	useEffect(() => {
+		if(feed.length !== 0 && numRenderedItems === 0)
+			scheduleNextUpdate();
+
+		return () => {
+			if(feed.length === numRenderedItems) clearTimeout(timer);
+		}
+	});
+
+	/**
+	 * Sets the timeout subscription for each item added to renderedItems.
+	 */
+	const scheduleNextUpdate = (): void => {
+		timer = setTimeout(updateRenderedItems, 40);
 	}
 
-	// component doesn't currently unmount, but this is necessary in that scenario
-	componentWillUnmount() {
-		clearTimeout(this.timer);
+	/**
+	 * Renders each item from the feed successively, with a timeout in
+	 * between each iteration.
+	 */
+	const updateRenderedItems = (): void => {
+		renderItem(feed[numRenderedItems]);
+
+		if(feed.length > numRenderedItems)
+			scheduleNextUpdate();
 	}
 
-	// sets timer for each item added to renderedItems
-	scheduleNextUpdate = (): void => {
-		this.timer = setTimeout(this.updateRenderedItems, 40);
-	}
-
-	// Renders each item from the feed successively, with a timeout in between each iteration.
-	updateRenderedItems = (): void => {
-		this.props.renderItem(this.props.feed[this.props.numRenderedItems]);
-
-		if(this.props.feed.length > this.props.numRenderedItems)
-			this.scheduleNextUpdate();
-	}
-
-	render() {
-		// checks for loading
-		if (!this.props.isFetching)
-			return (
-				<ul id="feed">
-					{this.props.renderedItems.map((item: any, i: number) =>
-						item &&						
-						<li key={i}>
-							<a href={item.guid}>
-								<h2>{item.title}</h2>
-								<h5>{moment(item.isoDate).fromNow()}</h5>
-								<p>{item.contentSnippet}</p>
-							</a>
-						</li>
-					)}
-				</ul>
-			)
-		else
-			return null;
-	}
-}
+	/**
+	 * Renders the renderedItems array if not fetching.
+	 */
+	if (!isFetching)
+		return (
+			<ul id="feed">
+				{renderedItems.map((item: any, i: number) =>
+					item &&						
+					<li key={i}>
+						<a href={item.guid}>
+							<h2>{item.title}</h2>
+							<h5>{moment(item.isoDate).fromNow()}</h5>
+							<p>{item.contentSnippet}</p>
+						</a>
+					</li>
+				)}
+			</ul>
+		)
+	else
+		return null;
+});
 
 const mapStateToProps = (state: any) => ({
 	feed: state.feed,
