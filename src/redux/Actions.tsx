@@ -1,36 +1,50 @@
 import Parser from 'rss-parser';
+import { Types } from '.';
 
-// action type(s)
-const Types = {
-	REQUEST_FEED: 'REQUEST_FEED',
-	RECIEVE_FEED: 'RECIEVE_FEED',
-	ERROR: 'ERROR',
-	RENDER_ITEM: 'RENDER_ITEM',
-};
-
-// action(s)
+/**
+ * Indicates feed is being fetched.
+ * The url arg is currently unused.
+ * 
+ * @param url the url being fetched 
+ */
 const requestFeed = (url: string) => ({
 	type: Types.REQUEST_FEED,
 	payload: url,
 });
 
+/**
+ * Indicates that feed has been recieved.
+ * 
+ * @param feed the JSON object returned from rss-parser
+ */
 const recieveFeed = (feed: any) => ({
 	type: Types.RECIEVE_FEED,
 	payload: feed.items,
 });
 
+/**
+ * Indicates that the fetch has returned an error.
+ * 
+ * @param error the caught error object
+ */
 const catchError = (error: any) => ({
 	type: Types.ERROR,
 	payload: error.message || 'Something went wrong.',
 });
 
+/**
+ * Indicates that the next item from feed will be added to the
+ * renderedItems array.
+ * 
+ * @param item the item to be added to the rnederedItems array
+ */
 const renderItem = (item: any) => ({
 	type: Types.RENDER_ITEM,
 	payload: item,
 });
 
 /**
- * Action creator that handles asynchronous requests for RSS feeds.
+ * Handles asynchronous request for RSS feed.
  * 
  * Redux-thunk lets us pass the dispatch method as an argument to the returned
  * function, which in turn lets the function dispatch actions itself.

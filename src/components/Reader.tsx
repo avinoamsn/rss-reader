@@ -31,7 +31,8 @@ const Reader: FunctionComponent<ReaderProps> = memo(({
 			scheduleNextUpdate();
 
 		return () => {
-			if(feed.length === numRenderedItems) clearTimeout(timer);
+			if(feed.length === numRenderedItems)
+				clearTimeout(timer);
 		}
 	});
 

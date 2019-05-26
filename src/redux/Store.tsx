@@ -10,7 +10,10 @@ const persistConfig = {
   key: 'root',
   storage,
 }
+
+// persist redux state
 const persistedReducer = persistReducer(persistConfig, rootReducer)
+
 // enhancer for Redux DevTools
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

@@ -10,6 +10,12 @@ const defaultState = {
 	numRenderedItems: 0,
 }
 
+/**
+ * The root reducer.
+ * 
+ * @param state the state of the app
+ * @param action the action being performed
+ */
 const feed = (state = defaultState, action: any) => {
 	switch(action.type) {
 	 	case ACTIONS.Types.REQUEST_FEED:
