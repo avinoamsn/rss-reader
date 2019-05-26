@@ -1,14 +1,15 @@
-import React, { useState, useEffect, FunctionComponent } from 'react';
+import React, { useState, useEffect, FunctionComponent, memo } from 'react';
 import { connect } from 'react-redux';
 
 interface ErrorProps {
 	error: boolean,
 	errorMessage: string,
 }
+
 /**
  * @TODO use reducer to set error to false once dismissed(?)
  */
-const Error: FunctionComponent<ErrorProps> = ({ error, errorMessage }) => {
+const Error: FunctionComponent<ErrorProps> = memo(({ error, errorMessage }) => {
 	const [show, setShow] = useState(false);
 
 	// avoid infinite loop by checking if error & errorMessage have changed
@@ -25,7 +26,7 @@ const Error: FunctionComponent<ErrorProps> = ({ error, errorMessage }) => {
 		);
 	else
 		return null;
-}
+})
 
 const mapStateToProps = (state: any) => ({
 	error: state.error,
