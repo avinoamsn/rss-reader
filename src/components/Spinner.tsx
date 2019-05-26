@@ -1,34 +1,28 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent, memo } from 'react';
 import { connect } from "react-redux";
 
 interface SpinnerProps {
 	isFetching: boolean;
 }
 
-class Spinner extends Component<SpinnerProps> {
-	randomAnimation = () => {
+const Spinner: FunctionComponent<SpinnerProps> = memo(({ isFetching }) => {
+	const randomAnimation = () => {
 		return { animationDelay: Math.random() / 3.2 + 's' };
 	}
 
-	renderSpinner =() => {
-		if(this.props.isFetching) {
-			return (
-				<div id="spinner">
-					<div style={this.randomAnimation()} className="spinner-component" id="spin-1" />
-					<div style={this.randomAnimation()} className="spinner-component" id="spin-2" />
-					<br />
-					<div style={this.randomAnimation()} className="spinner-component" id="spin-3" />
-					<div style={this.randomAnimation()} className="spinner-component" id="spin-4" />
-				</div>
-			);
-		} else
-			return null;
-	}
-
-	render() {
-		return (this.renderSpinner());
-	}
-}
+	if (isFetching) {
+		return (
+			<div id="spinner">
+				<div style={randomAnimation()} className="spinner-component" id="spin-1" />
+				<div style={randomAnimation()} className="spinner-component" id="spin-2" />
+				<br />
+				<div style={randomAnimation()} className="spinner-component" id="spin-3" />
+				<div style={randomAnimation()} className="spinner-component" id="spin-4" />
+			</div>
+		);
+	} else
+		return null;
+});
 
 const mapStateToProps = (state: any) => ({
 	isFetching: state.isFetching,
