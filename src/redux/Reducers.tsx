@@ -1,6 +1,7 @@
 import  { ACTIONS } from '.';
 
 const defaultState = {
+	url: '',
 	isFetching: false,
 	feed: [],
 	error: false,

@@ -9,7 +9,7 @@ const Types = {
 };
 
 // action(s)
-const requestFeed = (url: any) => ({
+const requestFeed = (url: string) => ({
 	type: Types.REQUEST_FEED,
 	payload: url,
 });
