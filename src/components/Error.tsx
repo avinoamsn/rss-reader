@@ -1,43 +1,30 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 
 interface ErrorProps {
 	error: boolean,
 	errorMessage: string,
 }
+/**
+ * @TODO use reducer to set error to false once dismissed(?)
+ */
+const Error: FunctionComponent<ErrorProps> = ({ error, errorMessage }) => {
+	const [show, setShow] = useState(false);
 
-interface ErrorState {
-	show: boolean;
-}
+	// avoid infinite loop by checking if error & errorMessage have changed
+	useEffect(() => setShow(true), [error, errorMessage]);
 
-class Error extends Component<ErrorProps, ErrorState> {
-	constructor(props: any) {
-		super(props);
-		this.state = {
-			show: false,
-		};
-	}
-
-	componentWillReceiveProps() {
-		this.setState({ show: true });
-	}
-
-	handleHide = () => this.setState({ show: false });
-
-	render() {
-
-		if(this.props.error && this.state.show)
-			return(
-				<div className="error">
-					<h3>ERROR:</h3> 
-					<p>{this.props.errorMessage}</p>
-					<p>This may not be a valid RSS feed. Please try a different URL.</p>
-					<button onClick={this.handleHide}>dismiss</button>
-				</div>
-			);
-		else
-			return null;
-	}
+	if(error && show)
+		return(
+			<div className="error">
+				<h3>ERROR:</h3> 
+				<p>{errorMessage}</p>
+				<p>This may not be a valid RSS feed. Please try a different URL.</p>
+			<button onClick={e => setShow(false)}>dismiss</button>
+			</div>
+		);
+	else
+		return null;
 }
 
 const mapStateToProps = (state: any) => ({
