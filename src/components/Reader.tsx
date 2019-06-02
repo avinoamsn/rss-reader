@@ -83,11 +83,11 @@ const mapStateToProps = (state: any) => ({
 	numRenderedItems: state.numRenderedItems,
 })
 
-const mapDispatchToProps = (dispatch: any) => ({
-	renderItem: (item: any) => dispatch(ACTIONS.renderItem(item)),
-})
+const dispatch = {
+	renderItem: (item: any) => ACTIONS.renderItem(item),
+}
 
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps,
+	dispatch,
 )(Reader)

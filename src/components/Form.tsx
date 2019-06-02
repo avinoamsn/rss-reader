@@ -27,11 +27,11 @@ const Form: FunctionComponent<FormProps> = memo(({ fetchFeed }) => {
 	)
 })
 
-const mapDispatchToProps = (dispatch: any) => ({
-	fetchFeed: (url: string) => dispatch(ACTIONS.fetchFeed(url)),
-})
+const dispatch = {
+	fetchFeed: (url: string) => ACTIONS.fetchFeed(url),
+}
 
 export default connect(
 	null, // https://tinyurl.com/y63rhvg5
-	mapDispatchToProps,
+	dispatch,
 )(Form)
