@@ -56,6 +56,7 @@ const Reader: FunctionComponent<ReaderProps> = memo(({
 
 	/**
 	 * Renders the renderedItems array if not fetching.
+	 * First checks that item is not null.
 	 */
 	if (!isFetching)
 		return (
