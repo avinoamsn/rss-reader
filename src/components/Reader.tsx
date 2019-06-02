@@ -61,7 +61,7 @@ const Reader: FunctionComponent<ReaderProps> = memo(({
 		return (
 			<ul id="feed">
 				{renderedItems.map((item: any, i: number) =>
-					item &&						
+					item &&
 					<li key={i}>
 						<a href={item.guid}>
 							<h2>{item.title}</h2>
