@@ -13,6 +13,9 @@ interface ReaderProps {
 
 let timer: NodeJS.Timeout // timeout subscription object
 
+/**
+ * Displays the RSS feed.
+ */
 const Reader: FunctionComponent<ReaderProps> = memo(({
 	feed,
 	isFetching,
@@ -22,7 +25,7 @@ const Reader: FunctionComponent<ReaderProps> = memo(({
 }) => {
 	/**
 	 * Initiates the rendering loop when numRenderedItems is reset.
-	 * 
+	 *
 	 * The return function will clear the timeout subscription once each
 	 * item in the feed is rendered. Similar to componentDidUnmount().
 	 */

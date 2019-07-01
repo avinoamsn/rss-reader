@@ -7,6 +7,9 @@ interface FormProps {
 	fetchFeed(url: string): void,
 }
 
+/**
+ * Accepts an RSS feed URL and dispatches the fetch action.
+ */
 const Form: FunctionComponent<FormProps> = memo(({ fetchFeed }) => {
 	const [url, setUrl] = useState('')
 

@@ -2,10 +2,10 @@ import Parser from 'rss-parser'
 import { Types } from '.'
 
 /**
- * Indicates feed is being fetched.
- * The url arg is currently unused.
- * 
- * @param url the url being fetched 
+ * Feed is being fetched.
+ *
+ * @note the url arg is currently unused.
+ * @param url the url being fetched
  */
 const requestFeed = (url: string) => ({
 	type: Types.REQUEST_FEED,
@@ -13,8 +13,8 @@ const requestFeed = (url: string) => ({
 })
 
 /**
- * Indicates that feed has been recieved.
- * 
+ * Feed has been recieved.
+ *
  * @param feed the JSON object returned from rss-parser
  */
 const recieveFeed = (feed: any) => ({
@@ -23,8 +23,8 @@ const recieveFeed = (feed: any) => ({
 })
 
 /**
- * Indicates that the fetch has returned an error.
- * 
+ * Fetch has returned an error.
+ *
  * @param error the caught error object
  */
 const catchError = (error: any) => ({
@@ -33,9 +33,8 @@ const catchError = (error: any) => ({
 })
 
 /**
- * Indicates that the next item from feed will be added to the
- * renderedItems array.
- * 
+ * The next item from feed will be added to the renderedItems array.
+ *
  * @param item the item to be added to the rnederedItems array
  */
 const renderItem = (item: any) => ({
@@ -45,15 +44,14 @@ const renderItem = (item: any) => ({
 
 /**
  * Handles asynchronous request for RSS feed.
- * 
+ *
  * Redux-thunk lets us pass the dispatch method as an argument to the returned
  * function, which in turn lets the function dispatch actions itself.
- * 
+ *
  * @param url the URL of the RSS feed
  */
 const fetchFeed = (url: any) => {
 	// proxy server to avoid CORS, clone of https://github.com/Rob--W/cors-anywhere/
-	// there is likely a better way to handle this on a prod server, but this works for now
 	const PROXY_URL = 'https://boiling-citadel-49650.herokuapp.com/'
 	const parser = new Parser()
 
@@ -66,7 +64,7 @@ const fetchFeed = (url: any) => {
 			else
 				dispatch(recieveFeed(feed))
 		})
-		
+
 	}
 }
 

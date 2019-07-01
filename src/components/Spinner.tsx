@@ -5,6 +5,9 @@ interface SpinnerProps {
 	isFetching: boolean
 }
 
+/**
+ * Displays a spinner while the feed is being fetched.
+ */
 const Spinner: FunctionComponent<SpinnerProps> = memo(({ isFetching }) => {
 	const randomAnimation = () => {
 		return { animationDelay: Math.random() / 3.2 + 's' }

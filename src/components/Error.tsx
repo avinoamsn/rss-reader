@@ -7,18 +7,20 @@ interface ErrorProps {
 }
 
 /**
- * @TODO use reducer to set error to false once dismissed(?)
+ * Displays message on fetch returning an error.
  */
 const Error: FunctionComponent<ErrorProps> = memo(({ error, errorMessage }) => {
 	const [show, setShow] = useState(false)
 
-	// avoid infinite loop by checking if error & errorMessage have changed
+	// only executes if error or errorMessage have changed
 	useEffect(() => setShow(true), [error, errorMessage])
 
+	// if conditional only uses "show", the message is displayed on page reload,
+	// although the reason isn't entirely clear
 	if(error && show)
 		return(
 			<div className="error">
-				<h3>ERROR:</h3> 
+				<h3>ERROR:</h3>
 				<p>{errorMessage}</p>
 				<p>This may not be a valid RSS feed. Please try a different URL.</p>
 			<button onClick={e => setShow(false)}>dismiss</button>
