@@ -22,7 +22,7 @@
     "redux-logger": "^3.0.6",
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0",
-    "rss-parser": "^3.7.0",
+    "rss-parser": "^3.13.0",
     "typescript": "^3.4.5"
   },
   "scripts": {
